@@ -1,0 +1,67 @@
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex">
+  <div class="container position-relative d-flex flex-column" data-aos="fade">
+    <ol>
+      <li><a href="?module=home">Home</a></li>
+      <li>Distribution</li>
+      <li>Branch</li>
+    </ol>
+  </div>
+</div>
+<!-- End Breadcrumbs -->
+
+<!-- ======= Branch Section ======= -->
+<section id="branch" class="branch section-bg" style="min-height: 492px;">
+  <div class="container" data-aos="fade-up">
+
+    <div class="section-header" style="margin-top: 25px; padding-bottom: 0%;">
+      <h2>Our Branch</h2>
+      <p>Consist of 16 branches. 10 in Java, 3 in Sumatra, 1 in Sulawesi, 1 in Kalimantan, 1 in Bali</p>
+    </div>
+
+    <div class="slides-2 swiper">
+      <div class="swiper-wrapper">
+        <?php                
+            $no = 1;
+            $postData['status'] = 1;            
+            $data = $dbsql->getBranchoffice($postData);          
+            while($r = sqlsrv_fetch_object( $data )){
+        ?>
+        <div class="swiper-slide">
+          <div class="branch-wrap">
+            <div class="branch-item">
+              <a style="text-align: center" href="<?=$r->url_maps?>" target="_blank">
+                <img src="<?=$r->barcode_maps?>" class="branch-img" alt="">
+              </a>                
+              <h3>DMA - <?=$r->name?></h3>
+              <div class="branch-hr"></div>
+              <div class="our-story">
+                <p>
+                  <b class="color-red"><i>Address</i></b> <small> in <?=$r->province?> </small>
+                  <br><?=$r->address?>
+                </p>
+                <?php
+                  if($r->phone != null || $r->phone != ''){
+                ?>
+                  <p>
+                    <b class="color-red"><i>Phone</i></b>
+                    <br><?=$r->phone?>
+                  </p>
+                <?php 
+                  } 
+                ?>              
+              </div>                                 
+            </div>
+          </div>
+        </div><!-- End branch item -->        
+        <?php 
+            $no++;
+          } 
+          $dbsql->close();
+        ?>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+  </div>  
+</section><!-- End Branch Section -->

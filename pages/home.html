@@ -1,0 +1,329 @@
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="hero">
+  <div class="info d-flex align-items-center">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+          <h1 data-aos="fade-down"><span class="color-black" style="font-weight: 700;">Welcome to</span> <br> <span class="color-dark-blue" style="font-weight: 700;">PT. DAYA MUDA AGUNG</span></h1>
+          <p data-aos="fade-up"><span class="color-black" style="font-weight: 700;">We are Distributor of Pharmaceutical and Consumer Goods</span></p>
+          <a data-aos="fade-up" data-aos-delay="200" href="#about" class="active btn-get-started">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+    <div class="carousel-item active" style="background-image: url(assets/img/home/home1.jpg)"></div>
+    <div class="carousel-item" style="background-image: url(assets/img/home/home2.jpg)"></div>
+    <div class="carousel-item" style="background-image: url(assets/img/home/home3.jpg)"></div>
+    <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+    </a>
+    <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+    </a>
+  </div>
+</section>
+<!-- End Hero Section -->
+
+<!-- ======= About Section ======= -->
+<section id="about" class="about" style="min-height:600px; background-color:#fff;">
+  <div class="container" data-aos="fade-up">
+
+    <div class="row position-relative" style="margin-top: 50px;">
+      <div class="col-lg-10">
+        <div class="our-story">
+          <p style="text-align: justify" data-aos="fade-up" data-aos-delay="100">
+            <b class="color-blue">About Us</b>
+            <br>PT Daya Muda Agung (DMA), is one of the subsidiaries of the Mahakam Group that runs pharmaceutical and consumer products distributions with its 16 branches. 10 in Java, 3 in Sumatra, 1 in Sulawesi, 1 in Kalimantan, 1 in Bali and supported by 3 sub-distributors which distribute betadine product.
+          </p>
+
+          <p style="text-align: justify" data-aos="fade-up" data-aos-delay="150">
+            <b class="color-blue">Our History</b>
+            <br>PT Daya Muda Agung, has distributed Betadine products <i>since 1977</i>.
+            Along with the development of the Mahakam Beta Farma as a pharmaceutical factory. Besides Mahakam Beta Farma's products, DMA is also supported by Inkenas Agung, Beta Gasindo Agung, and other National Principals for Pharma and Consumer products.
+          </p>    
+
+          <p style="text-align: justify" data-aos="fade-up" data-aos-delay="200">
+            <b class="color-blue">Our Value</b>
+            <br><b class="color-dark-blue" style="font-size:36px;font-family: Arial Black;">L <b class="color-red">•</b> U <b class="color-red">•</b> C <b class="color-red">•</b> K <b class="color-red">•</b> Y</b>
+            <br><small style="font-weight: 700;">Love God <b class="color-red">•</b> Understanding <b class="color-red">•</b> Connection <b class="color-red">•</b> Knowledge <b class="color-red">•</b> Yield</small>
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 about-img" style="background-image: url(assets/img/about/aboutus.jpg);" data-aos="fade-up" data-aos-delay="700"></div>    
+
+    </div>
+
+  </div>
+</section>
+<!-- End About Section -->
+
+<!-- ======= Principal Section ======= -->
+<section id="principal-home" class="principal-home" style="min-height:300px; background-color:#f5f6f7;">
+  <div class="container" data-aos="fade-up">
+
+    <div class="section-header" style="margin-top: 50px; padding-bottom: 0%;">
+      <h2>Our Products</h2>
+      <p>Supported by Principals Internal And External</p>
+    </div>    
+
+    <ul class="nav nav-tabs row  g-2 d-flex">
+
+      <li class="nav-item col-3">
+        <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#tab-1">
+          <h4>Principals Internal</h4>
+        </a>
+      </li>
+      <!-- End tab nav item -->
+
+      <li class="nav-item col-3">
+        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-2">
+          <h4>Principals External</h4>
+        </a>
+        <!-- End tab nav item -->
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active show" id="tab-1">
+        <div class="slides-2 swiper">
+          <div class="swiper-wrapper">
+            <?php
+              $no = 1;
+              $postData['principalgroup_id'] = 1;
+              $postData['status'] = 1;            
+              $data = $dbsql->getPrincipalInternalExternal($postData);                  
+              while($r = sqlsrv_fetch_object( $data )){
+                $image = 'assets/img/principal/' . $r->principal_code . '.png';
+                if(file_exists($image)){
+            ?>
+            <div class="swiper-slide">
+              <div class="principal-home-wrap">
+                  <div class="principal-home-item">                    
+                    <a style="text-align: center" href="?module=product&principal_id=<?=base64_encrypt($r->id, $key)?>">
+                      <img src="<?=$image?>" class="principal-home-img" alt="">            
+                    </a>                
+                    <h3><?=$no;?> . <?=$r->principal_name?></h3>
+                    <div class="principal-home-hr"></div>
+                  </div>
+              </div>
+            </div>
+            <!-- End swiper-slide item -->         
+            <?php 
+                  $no++;
+                }  
+              } 
+            ?>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+      <!-- End tab content item -->
+
+      <div class="tab-pane" id="tab-2">
+        <div class="slides-2 swiper">
+          <div class="swiper-wrapper">
+            <?php
+              $no = 1;
+              $postData['principalgroup_id'] = 2;
+              $postData['status'] = 1;            
+              $data = $dbsql->getPrincipalInternalExternal($postData);                  
+              while($r = sqlsrv_fetch_object( $data )){
+                $image = 'assets/img/principal/' . $r->principal_code . '.png';
+                if(file_exists($image)){
+            ?>
+            <div class="swiper-slide">
+              <div class="principal-home-wrap">
+                  <div class="principal-home-item">
+                    <a style="text-align: center" href="?module=product&principal_id=<?=base64_encrypt($r->id, $key)?>">
+                      <img src="<?=$image?>" class="principal-home-img" alt="">            
+                    </a>                
+                    <h3><?=$no;?> . <?=$r->principal_name?></h3>
+                    <div class="principal-home-hr"></div>
+                  </div>
+              </div>
+            </div>
+            <!-- End swiper-slide item -->         
+            <?php 
+                  $no++;
+                }  
+              } 
+            ?>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+      <!-- End tab content item -->      
+    </div>
+
+  </div>
+</section>
+<!-- End Principal Section -->
+
+<!-- ======= Branch Section ======= -->
+<section id="branch" class="branch" style="min-height:300px; background-color:#fff;">
+  <div class="container" data-aos="fade-up">
+
+    <div class="section-header" style="margin-top: 50px;">
+      <h2>Our Branch</h2>
+      <p>Consist of 16 branches. 10 in Java, 3 in Sumatra, 1 in Sulawesi, 1 in Kalimantan, 1 in Bali</p>
+    </div>
+
+    <div class="slides-2 swiper">
+      <div class="swiper-wrapper">
+        <?php
+            $no = 1;
+            $postData['status'] = 1;
+            $data = $dbsql->getBranchoffice($postData);
+            while($r = sqlsrv_fetch_object( $data )){
+        ?>
+        <div class="swiper-slide">
+          <div class="branch-wrap">
+            <div class="branch-item">
+              <a style="text-align: center" href="<?=$r->url_maps?>" target="_blank">
+                <img src="<?=$r->barcode_maps?>" class="branch-img" alt="">                  
+              </a>                
+              <h3>DMA - <?=$r->name?></h3>
+              <div class="branch-hr"></div>
+              <div class="our-story">
+                <p>
+                  <b class="color-red"><i>Address</i></b> <small> in <?=$r->province?> </small>
+                  <br><?=$r->address?>
+                </p>
+                <?php
+                  if( $r->phone != null || $r->phone != ''){
+                ?>
+                  <p>
+                    <b class="color-red"><i>Phone</i></b>
+                    <br><?=$r->phone?>
+                  </p>
+                <?php 
+                  } 
+                ?>              
+              </div>                                 
+            </div>
+          </div>
+        </div>
+        <!-- End branch item -->        
+        <?php 
+            $no++;
+          }
+          $dbsql->close();
+        ?>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+  </div>
+</section>
+<!-- End Branch Section -->
+
+<!-- ======= Services Section ======= -->
+<section id="services" class="services" style="min-height: 300px; background-color: #fff;">
+  <div class="container" data-aos="fade-up">
+
+    <div class="section-header" style="margin-top: 50px;">
+      <h2>Our Services</h2>
+      <p>Services to Hospital, Pharmacy & Market Place</p>
+    </div>
+
+    <div class="row gy-4">
+
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-item  position-relative">
+          <div class="icon">
+            <i class="fa-solid fa-hospital"></i>
+          </div>
+          <h3>Hospital</h3>
+          <p style="text-align: left;">Hospital is the place where the distribution of medicines is carried out, all nearby hospitals have become part of us.</p>
+          <!-- <a href="#" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a> -->
+        </div>
+      </div>
+      <!-- End Service Item -->
+
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="service-item position-relative">
+          <div class="icon">
+            <i class="fa-solid bi-capsule"></i>
+          </div>
+          <h3>Pharmacy</h3>
+          <p style="text-align: left">We have over 1000 Pharmacies working with us on the transaction of the purchase and sale of our products.</p>
+          <!-- <a href="#" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a> -->
+        </div>
+      </div>
+      <!-- End Service Item -->
+
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="service-item position-relative">
+          <div class="icon">
+            <i class="fa-solid bi-shop"></i>
+          </div>
+          <h3>Market Place</h3>
+          <p style="text-align: left">Besides healthcare products, we also offer consumer goods, like sauce, soy sauce, vinegar, and syrup.</p>
+          <!-- <a href="#" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a> -->
+        </div>
+      </div>
+      <!-- End Service Item -->
+
+    </div>
+  </div>
+</section><!-- End Services Section -->
+
+<!-- ======= Contact Section ======= -->
+<section id="contact" class="contact" style="min-height:600px; background-color:#f5f6f7;">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="section-header" style="margin-top: 50px;">
+      <h2>Contact Head Office</h2>      
+    </div>
+
+    <div class="row gy-4">
+      <div class="col-lg-6 col-md-6">
+        <div class="info-item d-flex flex-column justify-content-center align-items-center" style="background-color:#fff;">
+          <i class="bi bi-envelope"></i>
+          <h3>Email Us</h3>
+          <p>ptdma@dma.co.id</p>
+        </div>
+      </div>
+      <!-- End Info Item -->
+
+      <div class="col-lg-6 col-md-6">
+        <div class="info-item  d-flex flex-column justify-content-center align-items-center" style="background-color:#fff;">
+          <i class="bi bi-telephone"></i>
+          <h3>Call Us</h3>
+          <p>+62-21 4600007</p>
+        </div>
+      </div>
+      <!-- End Info Item -->
+
+      <div class="col-lg-6">
+        <div class="info-item  d-flex flex-column justify-content-center align-items-center" style="background-color:#fff;">
+          <i class="bi bi-map"></i>
+          <h3>Our Address</h3>
+          <p style="text-align: center">
+            PT. DAYA MUDA AGUNG <small style="font-weight: 700;">Head Office</small>
+            <br>Jl. Pulo Kambing Raya No.9, Kawasan Industri - Pulogadung
+            <br>Jakarta Timur 13930, Indonesia
+            <br>Gedung Graha Mahakam
+          </p>                    
+          <br><a style="text-align: center" href="https://goo.gl/maps/RWHjoPh5KddNyinF9" target="_blank">
+            <img src="https://sso.dma.co.id/storage/branchoffice/00_PST.png" alt="" width="200" height="150">
+          </a>
+        </div>
+      </div><!-- End Info Item -->
+
+      <div class="col-lg-6 col-md-6">
+        <div class="info-item  d-flex flex-column justify-content-center align-items-center" style="background-color:#fff;">
+          <i class="bi bi-geo-alt"></i>
+          <h3>See on google maps</h3>
+          <div class="col-lg-10 col-md-6">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.5045662270113!2d106.90888731413735!3d-6.1969626624336716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f4b5188adb93%3A0xe648c75bbfcec534!2sGraha%20Mahakam!5e0!3m2!1sid!2sid!4v1670386502323!5m2!1sid!2sid" frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
+          </div>          
+        </div>
+      </div>
+      <!-- End Info Item -->
+    </div>
+  </div>
+</section>
+<!-- End Contact Section -->

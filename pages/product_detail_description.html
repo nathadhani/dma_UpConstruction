@@ -1,0 +1,67 @@
+<?php
+  if(isset($product_id)){
+    $product_id = base64_decrypt($product_id, $key);
+    $product_desc = sqlsrv_fetch_object( $dbsql->queryDB("SELECT TOP 1 product_code, product_name, businessclass_id, businessclass_name, principal_id, principal_name, productcategory_name FROM v_product WITH(NOLOCK) WHERE id = $product_id"));
+?>
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs d-flex">
+      <div class="container position-relative d-flex flex-column" data-aos="fade">
+        <div class="d-flex justify-content-between">
+          <ol>
+            <li><a href="?module=home">Home</a></li>
+            <li>Distribution</li>
+            <li><a href="?module=product">Product</a></li>
+            <?php if($product_desc->productcategory_name !== null && $product_desc->productcategory_name !== ''){ ?>
+              <li><?=$product_desc->productcategory_name?></a></li>
+            <?php } ?>  
+            <li><?=$product_desc->principal_name?></li>
+            <li><?=$product_desc->product_name?></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumbs -->
+<?php
+    $product_detail = sqlsrv_fetch_object( $dbsql->queryDB("SELECT TOP 1 product_content, image FROM v_webdma_product_detail WITH(NOLOCK) WHERE product_id = $product_id AND featured = 1"));    
+    if($product_detail !== null){
+      $image = $product_detail->image;
+      if($image !== null){
+?>
+      <!-- ======= Product Details Section ======= -->
+      <section id="product-details" class="product-details" style="min-height: 492px;">
+        <div class="container">
+          <div class="row gy-4">
+            <div class="col-lg-6">
+              <div class="container" data-aos="fade-up">
+                <div class="product-details-slider swiper">
+                  <div class="swiper-wrapper align-items-center">
+
+                    <div class="swiper-slide">
+                      <img src="<?=$image?>" alt="">
+                    </div>
+
+                  </div>
+                  <div class="swiper-pagination"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="product-info">
+                <?=htmlspecialchars_decode($product_detail->product_content, ENT_NOQUOTES)?>                  
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+      <!-- End Product Details Section -->
+<?php 
+      }else{ 
+        unset($product_id);
+        require_once('product.html');
+      }
+    }    
+    $dbsql->close();
+  }
+?>  

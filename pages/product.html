@@ -1,0 +1,164 @@
+<?php
+  if(isset($search_product)){
+    if($search_product !== null){
+      $postData['search'] = $search_product;
+    }
+  }
+  if(isset($principal_id)){
+    if($principal_id !== null){
+      $postData['principal_id'] = base64_decrypt($principal_id, $key);
+    }
+  }
+  if(isset($productcategory_id)){
+    if($productcategory_id !== null){
+      $postData['productcategory_id'] = base64_decrypt($productcategory_id, $key);
+    }
+  }  
+  if(isset($page)){
+    $postData['page'] = ($page*6)-6;
+  }
+?>            
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex">
+  <div class="container position-relative d-flex flex-column" data-aos="fade">
+    <ol>
+      <li><a href="?module=home">Home</a></li>
+      <li>Distribution</li>
+      <li>Products</li>
+      <?php
+        if(isset($productcategory_id)){
+          if($productcategory_id !== null){
+            $postData['id'] = base64_decrypt($productcategory_id, $key);
+            $result = sqlsrv_fetch_object($dbsql->getProductCategoryName($postData));
+      ?>
+        <li><?=$result->name?></li>
+      <?php }} ?>
+    </ol>
+  </div>
+</div>
+<!-- End Breadcrumbs -->
+
+<!-- ======= Product Section ======= -->
+<section id="product" class="product section-bg" style="min-height: 492px;">
+  <div class="container" data-aos="fade-up">
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="sidebar">  
+          <h3 class="sidebar-title">Search</h3>
+          <div class="sidebar-item search-form">
+            <form action="?module=product" method="post" autocomplete="off">
+              <input type="text" name="search-product" placeholder="Search here...">
+              <button type="submit"><i class="bi bi-search"></i></button>
+            </form>
+          </div>
+          <!-- End sidebar search formn-->
+  
+          <h3 class="sidebar-title">Categories</h3>
+          <div class="sidebar-item categories">
+            <ul>
+              <?php
+                $count_all = sqlsrv_fetch_object( $dbsql->queryDB("SELECT COUNT(id) as count_category FROM v_webdma_product_detail WITH(NOLOCK) WHERE featured = 1"));
+              ?>
+                <li><a href="?module=product">All <span>(<?=$count_all->count_category?>)</span></a></li>
+              <?php
+                $data = $dbsql->getProductCategory($postData);
+                while($r = sqlsrv_fetch_object( $data )){
+                  $count_by_category = sqlsrv_fetch_object( $dbsql->queryDB("SELECT COUNT(id) as count_category FROM v_webdma_product_detail WITH(NOLOCK) WHERE featured = 1 AND productcategory_id = $r->id "));  
+                  $count_result = $count_by_category->count_category == null ? 0 : $count_by_category->count_category;
+              ?>
+                <li><a href="?module=product&productcategory_id=<?=base64_encrypt($r->id, $key)?>"><?=$r->name;?> <span>(<?=$count_result?>)</span></a></li>
+              <?php } ?>
+            </ul>
+          </div>
+          <!-- End sidebar categories-->
+        </div>  
+      </div>
+
+      <div class="col-lg-8">  
+        <!-- ======= Pagination item ======= -->
+        <div class="row">
+          <div class="col-lg-9">
+            <?php
+              $getPage = sqlsrv_fetch_object($dbsql->getPageProduct($postData));
+              $jlhpage = ceil($getPage->count_page/6);
+              if($jlhpage > 1){
+                $maxpage = $jlhpage;
+                if($jlhpage > 7){
+                  $maxpage = 7;
+                }    
+            ?>
+              <nav aria-label="Page navigation">
+                <ul class="pagination">
+                  <?php if($page > 1){ ?>          
+                    <li class="page-item">
+                      <a class="page-link" href="?module=product&page=<?=$page-1;?>&search-product=<?=$search_product?>&principal_id=<?=$principal_id?>&productcategory_id=<?=$productcategory_id?>" tabindex="-1">Previous</a>
+                    </li>
+                  <?php } else { ?>  
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#"tabindex="-1">Previous</a>
+                    </li>
+                  <?php } ?>
+                  <?php for($b=1;$b<=$maxpage;$b++){ ?>  
+                    <?php if(isset($page) && $page == $b){?>   
+                      <li class="page-item active"><a class="page-link" href="?module=product&page=<?=$b;?>&search-product=<?=$search_product?>&principal_id=<?=$principal_id?>&productcategory_id=<?=$productcategory_id?>"><?=$b;?></a></li>
+                    <?php } else { ?>
+                      <li class="page-item"><a class="page-link" href="?module=product&page=<?=$b;?>&search-product=<?=$search_product?>&principal_id=<?=$principal_id?>&productcategory_id=<?=$productcategory_id?>"><?=$b;?></a></li>
+                    <?php } ?> 
+                  <?php } ?>       
+                  <?php if(($page > 1 && $page < $maxpage) || $page < $jlhpage){ ?> 
+                    <li class="page-item">
+                      <a class="page-link" href="?module=product&page=<?=$page+1;?>&search-product=<?=$search_product?>&principal_id=<?=$principal_id?>&productcategory_id=<?=$productcategory_id?>">Next</a>
+                    </li>
+                  <?php } else { ?>
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#">Next</a>
+                    </li>
+                  <?php } ?>
+                </ul>
+              </nav>
+            <?php } ?>  
+          </div> 
+          <div class="col-lg-3">
+            <?php if(!isset($page) && isset($jlhpage)){ ?>
+              <label style="text-align:end; margin-top:10px;">Total Page <?php echo $jlhpage;?></label>
+            <?php } ?>    
+            <?php if(isset($page) && isset($jlhpage)){ ?>
+              <label style="text-align:end; margin-top:10px;">Page <?php echo $page . ' of ' . $jlhpage;?></label>   
+            <?php } ?>    
+          </div>          
+        </div>     
+        <!-- End pagination item -->
+
+        <!-- ======= Image Item ======= -->
+        <div class="row gy-3">
+          <?php
+            $data = $dbsql->getProductList($postData);
+            while($r = sqlsrv_fetch_object($data)){
+              $image = $r->image;
+              if($image !== null){
+          ?>
+            <div class="col-lg-4 col-md-12">
+              <div class="product-item position-relative">
+                <div class="portfolio-content h-30">
+                  <img src="<?=$image?>" class="img-fluid" alt="">
+                  <div class="portfolio-info">
+                    <h4><?=$r->principal_name?></h4>
+                    <p><?=$r->product_name . ' (' .$r->product_code . ')'?></p>
+                    <a href="<?=$image?>" title="<?=$r->product_name?>" data-gallery="portfolio-gallery-remodeling" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                    <a href="?module=product_detail_description&product_id=<?=base64_encrypt($r->product_id, $key)?>" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>               
+          <?php }} ?>
+        </div>  
+        <!-- End image Item -->
+      </div>
+    </div>
+  </div>  
+</section>
+<!-- End Product Section -->
+<?php 
+  $dbsql->close();
+?>
