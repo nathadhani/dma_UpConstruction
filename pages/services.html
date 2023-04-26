@@ -16,44 +16,25 @@
 
     <div class="section-header" style="margin-top: 25px; padding-bottom: 0%;">
       <h2>Our Services</h2>
-      <p>Services to Hospital, Pharmacy & Market Place</p>
+      <p>Services to Hospital, Pharmacy & Market Place</p><br>
     </div>
 
     <div class="row gy-4">
-
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="service-item  position-relative">
-          <div class="icon">
-            <i class="fa-solid fa-hospital"></i>
+      <?php
+        $data = $dbsql->queryDB("SELECT * FROM webdma_services WITH(NOLOCK) WHERE featured = '1'");
+        while($r = sqlsrv_fetch_object( $data )){      
+      ?>
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="service-item  position-relative">
+            <div class="icon">
+              <i class="<?=$r->services_icon;?>"></i>
+            </div>
+            <h3><?=$r->services_title;?></h3>
+            <p style="text-align: left;"><?=$r->services_content;?></p>
+            <!-- <a href="service-details.html" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a> -->
           </div>
-          <h3>Hospital</h3>
-          <p style="text-align: left;">Hospital is the place where the distribution of medicines is carried out, all nearby hospitals have become part of us.</p>
-          <!-- <a href="service-details.html" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a> -->
-        </div>
-      </div><!-- End Service Item -->
-
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-        <div class="service-item position-relative">
-          <div class="icon">
-            <i class="fa-solid bi-capsule"></i>
-          </div>
-          <h3>Pharmacy</h3>
-          <p style="text-align: left">We have over 1000 Pharmacies working with us on the transaction of the purchase and sale of our products.</p>
-          <!-- <a href="service-details.html" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a> -->
-        </div>
-      </div><!-- End Service Item -->
-
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-        <div class="service-item position-relative">
-          <div class="icon">
-            <i class="fa-solid bi-shop"></i>
-          </div>
-          <h3>Market Place</h3>
-          <p style="text-align: left">Besides healthcare products, we also offer consumer goods, like sauce, soy sauce, vinegar, and syrup.</p>
-          <!-- <a href="service-details.html" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a> -->
-        </div>
-      </div><!-- End Service Item -->      
-
+        </div><!-- End Service Item -->
+      <?php } ?>      
     </div>
 
   </div>

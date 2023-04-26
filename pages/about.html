@@ -17,17 +17,22 @@
       <div class="col-lg-10">
         <div class="our-story">
           <p style="text-align: justify" data-aos="fade-up" data-aos-delay="100">
-            <b class="color-blue">About Us</b>
-            <br>PT Daya Muda Agung (DMA), is one of the subsidiaries of the Mahakam Group that runs pharmaceutical and consumer products distributions with its 16 branches. 10 in Java, 3 in Sumatra, 1 in Sulawesi, 1 in Kalimantan, 1 in Bali and supported by 3 sub-distributors which distribute betadine product.
+            <b class="color-blue">About Us</b><br>
+            <?php
+              $about_us = sqlsrv_fetch_object( $dbsql->queryDB("SELECT * FROM webdma_about_us WITH(NOLOCK) WHERE about_us_title LIKE '%about us%'"));              
+              echo $about_us->about_us_content;
+            ?>
           </p>
 
           <p style="text-align: justify" data-aos="fade-up" data-aos-delay="150">
-            <b class="color-blue">Our History</b>
-            <br>PT Daya Muda Agung, has distributed Betadine products <i>since 1977</i>.
-            Along with the development of the Mahakam Beta Farma as a pharmaceutical factory. Besides Mahakam Beta Farma's products, DMA is also supported by Inkenas Agung, Beta Gasindo Agung, and other National Principals for Pharma and Consumer products.
+            <b class="color-blue">Our History</b><br>
+            <?php
+              $out_history = sqlsrv_fetch_object( $dbsql->queryDB("SELECT * FROM webdma_about_us WITH(NOLOCK) WHERE about_us_title LIKE '%our history%'"));              
+              echo $out_history->about_us_content;
+            ?>
           </p>    
 
-          <p style="text-align: justify" data-aos="fade-up" data-aos-delay="200">
+          <p style="text-align: justify" data-aos="fade-up" data-aos-delay="150">
             <b class="color-blue">Our Value</b>
             <br><b class="color-dark-blue" style="font-size:36px;font-family: Arial Black;">L <b class="color-red">•</b> U <b class="color-red">•</b> C <b class="color-red">•</b> K <b class="color-red">•</b> Y</b>
             <br><small style="font-weight: 700;">Love God <b class="color-red">•</b> Understanding <b class="color-red">•</b> Connection <b class="color-red">•</b> Knowledge <b class="color-red">•</b> Yield</small>
