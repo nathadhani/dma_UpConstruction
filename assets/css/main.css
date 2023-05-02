@@ -1903,7 +1903,7 @@ section {
   color: #fff;
   border: 2px solid var(--color-primary); */
 
-  font-family: "Poppins", sans-serif;
+  /* font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-size: 13px;
   letter-spacing: 2px;
@@ -1913,11 +1913,25 @@ section {
   transition: ease-in-out 0.3s;
   color: #fff;
   background: #d9534f;
-  text-transform: uppercase;
+  text-transform: uppercase; */
+
+  font-size: 36px;
+  display: inline-block;
+  padding: 4px 0;
+  border-radius: 50px;
+  transition: 0.3s ease-in-out;
+  margin: 10px;
+  width: 64px;
+  height: 64px;
+  text-align: center;
+  border: 2px solid #fff;
+  color: #fff;
 }
 
 .hero .info .btn-get-started:hover {
-  background: var(--color-primary0);
+  /* background: var(--color-primary0); */
+  padding-top: 8px;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .hero .carousel-control-prev {

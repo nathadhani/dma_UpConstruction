@@ -3,8 +3,8 @@
 	date_default_timezone_set('Asia/Jakarta');
 	require_once 'src/lib.php';
 	$dbsql = new DATABASE();			
-	if(isset($_GET['module'])){
-		switch ($_GET['module']){
+	if(isset($_GET['pages'])){
+		switch ($_GET['pages']){
 			case 'home':
 				require_once('pages/home.html');
 				break;

@@ -22,7 +22,7 @@
 <div class="breadcrumbs d-flex">
   <div class="container position-relative d-flex flex-column" data-aos="fade">
     <ol>
-      <li><a href="?module=home">Home</a></li>
+      <li><a href="?pages=home">Home</a></li>
       <li>Distribution</li>
       <li>Products</li>
       <?php
@@ -47,7 +47,7 @@
         <div class="sidebar">  
           <h3 class="sidebar-title">Search</h3>
           <div class="sidebar-item search-form">
-            <form action="?module=product" method="post" autocomplete="off">
+            <form action="?pages=product" method="post" autocomplete="off">
               <input type="text" name="search-product" placeholder="Search here...">
               <button type="submit"><i class="bi bi-search"></i></button>
             </form>
@@ -60,14 +60,14 @@
               <?php
                 $count_all = sqlsrv_fetch_object( $dbsql->queryDB("SELECT COUNT(id) as count_category FROM v_webdma_product_detail WITH(NOLOCK) WHERE featured = 1"));
               ?>
-                <li><a href="?module=product">All <span>(<?=$count_all->count_category?>)</span></a></li>
+                <li><a href="?pages=product">All <span>(<?=$count_all->count_category?>)</span></a></li>
               <?php
                 $data = $dbsql->getProductCategory($postData);
                 while($r = sqlsrv_fetch_object( $data )){
                   $count_by_category = sqlsrv_fetch_object( $dbsql->queryDB("SELECT COUNT(id) as count_category FROM v_webdma_product_detail WITH(NOLOCK) WHERE featured = 1 AND productcategory_id = $r->id "));  
                   $count_result = $count_by_category->count_category == null ? 0 : $count_by_category->count_category;
               ?>
-                <li><a href="?module=product&productcategory_id=<?=base64_encrypt($r->id, $key)?>"><?=$r->name;?> <span>(<?=$count_result?>)</span></a></li>
+                <li><a href="?pages=product&productcategory_id=<?=base64_encrypt($r->id, $key)?>"><?=$r->name;?> <span>(<?=$count_result?>)</span></a></li>
               <?php } ?>
             </ul>
           </div>
@@ -92,7 +92,7 @@
                 <ul class="pagination">
                   <?php if($page > 1){ ?>          
                     <li class="page-item">
-                      <a class="page-link" href="?module=product&page=<?=$page-1;?>&search-product=<?=$search_product?>&principal_id=<?=$principal_id?>&productcategory_id=<?=$productcategory_id?>" tabindex="-1">Previous</a>
+                      <a class="page-link" href="?pages=product&page=<?=$page-1;?>&search-product=<?=$search_product?>&principal_id=<?=$principal_id?>&productcategory_id=<?=$productcategory_id?>" tabindex="-1">Previous</a>
                     </li>
                   <?php } else { ?>  
                     <li class="page-item disabled">
@@ -101,14 +101,14 @@
                   <?php } ?>
                   <?php for($b=1;$b<=$maxpage;$b++){ ?>  
                     <?php if(isset($page) && $page == $b){?>   
-                      <li class="page-item active"><a class="page-link" href="?module=product&page=<?=$b;?>&search-product=<?=$search_product?>&principal_id=<?=$principal_id?>&productcategory_id=<?=$productcategory_id?>"><?=$b;?></a></li>
+                      <li class="page-item active"><a class="page-link" href="?pages=product&page=<?=$b;?>&search-product=<?=$search_product?>&principal_id=<?=$principal_id?>&productcategory_id=<?=$productcategory_id?>"><?=$b;?></a></li>
                     <?php } else { ?>
-                      <li class="page-item"><a class="page-link" href="?module=product&page=<?=$b;?>&search-product=<?=$search_product?>&principal_id=<?=$principal_id?>&productcategory_id=<?=$productcategory_id?>"><?=$b;?></a></li>
+                      <li class="page-item"><a class="page-link" href="?pages=product&page=<?=$b;?>&search-product=<?=$search_product?>&principal_id=<?=$principal_id?>&productcategory_id=<?=$productcategory_id?>"><?=$b;?></a></li>
                     <?php } ?> 
                   <?php } ?>       
                   <?php if(($page > 1 && $page < $maxpage) || $page < $jlhpage){ ?> 
                     <li class="page-item">
-                      <a class="page-link" href="?module=product&page=<?=$page+1;?>&search-product=<?=$search_product?>&principal_id=<?=$principal_id?>&productcategory_id=<?=$productcategory_id?>">Next</a>
+                      <a class="page-link" href="?pages=product&page=<?=$page+1;?>&search-product=<?=$search_product?>&principal_id=<?=$principal_id?>&productcategory_id=<?=$productcategory_id?>">Next</a>
                     </li>
                   <?php } else { ?>
                     <li class="page-item disabled">
@@ -146,7 +146,7 @@
                     <h4><?=$r->principal_name?></h4>
                     <p><?=$r->product_name . ' (' .$r->product_code . ')'?></p>
                     <a href="<?=$image?>" title="<?=$r->product_name?>" data-gallery="portfolio-gallery-remodeling" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                    <a href="?module=product_detail_description&product_id=<?=base64_encrypt($r->product_id, $key)?>" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                    <a href="?pages=product_detail_description&product_id=<?=base64_encrypt($r->product_id, $key)?>" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
                   </div>
                 </div>
               </div>

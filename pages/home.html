@@ -6,7 +6,8 @@
         <div class="col-lg-6 text-center">
           <h1 data-aos="fade-down"><span class="color-black" style="font-weight: 700;">Welcome to</span> <br> <span class="color-dark-blue" style="font-weight: 700;">PT. DAYA MUDA AGUNG</span></h1>
           <p data-aos="fade-up"><span class="color-black" style="font-weight: 700;">We are Distributor of Pharmaceutical and Consumer Goods</span></p>
-          <a data-aos="fade-up" data-aos-delay="200" href="#about" class="active btn-get-started">Get Started</a>
+          <!-- <a data-aos="fade-up" data-aos-delay="200" href="#about" class="active btn-get-started">Get Started</a> -->
+          <a href="#about" class="active btn-get-started"><i class="bi bi-chevron-double-down"></i></a>
         </div>
       </div>
     </div>
@@ -106,7 +107,7 @@
             <div class="swiper-slide">
               <div class="principal-home-wrap">
                   <div class="principal-home-item">                    
-                    <a style="text-align: center" href="?module=product&principal_id=<?=base64_encrypt($r->id, $key)?>">
+                    <a style="text-align: center" href="?pages=product&principal_id=<?=base64_encrypt($r->id, $key)?>">
                       <img src="<?=$image?>" class="principal-home-img" alt="">            
                     </a>                
                     <h3><?=$no;?> . <?=$r->principal_name?></h3>
@@ -141,7 +142,7 @@
             <div class="swiper-slide">
               <div class="principal-home-wrap">
                   <div class="principal-home-item">
-                    <a style="text-align: center" href="?module=product&principal_id=<?=base64_encrypt($r->id, $key)?>">
+                    <a style="text-align: center" href="?pages=product&principal_id=<?=base64_encrypt($r->id, $key)?>">
                       <img src="<?=$image?>" class="principal-home-img" alt="">            
                     </a>                
                     <h3><?=$no;?> . <?=$r->principal_name?></h3>
