@@ -1,7 +1,7 @@
 <!-- ======= Header ======= -->
   <header id="header" class="header d-flex align-items-center">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-
+      
       <a href="?pages=home" class="logo d-flex align-items-center">
         <img src="assets/img/dma.png" width="200" height="200"></img>
       </a>
